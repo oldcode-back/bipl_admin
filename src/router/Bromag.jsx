@@ -8,6 +8,7 @@ import Upcoming_restaurant from "../pages/Bromag/Upcoming_restaurant";
 import Add_must_visit from "../pages/Bromag/Add_must_visit";
 import Add_upcoming from "../pages/Bromag/Add_upcoming";
 import Add_partners from "../pages/Bromag/Add_partners";
+import Update_partners from "../pages/Bromag/Update_partners";
 
 const Bromag = () => {
   return (
@@ -20,7 +21,10 @@ const Bromag = () => {
         <Route path="/upcoming" element={<Upcoming_restaurant />} />
         <Route path="/add-must-visit" element={<Add_must_visit />} />
         <Route path="/add-upcoming" element={<Add_upcoming />} />
+
         <Route path="/add-partners" element={<Add_partners />} />
+        <Route path="/update-partners/:restaurantId" element={<Update_partners />} />
+
 
 
 

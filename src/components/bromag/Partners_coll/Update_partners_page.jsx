@@ -2,18 +2,20 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { ServerAPI } from "../../../config/backendApi";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useStateAndCity } from "../../../utils/StateAndCityContext";
 
-const Add_Partners_page = () => {
+const Update_partners_page = () => {
   const [restaurantPic, setRestaurantPic] = useState("");
   const [previewImage, setPreviewImage] = useState(null);
 
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
+
   const navigate = useNavigate();
 
   const handleRestaurantPic = (e) => {
@@ -26,24 +28,31 @@ const Add_Partners_page = () => {
     setPreviewImage(imageUrl);
   };
 
+  const { restaurantId } = useParams();
+
   const { state, city } = useStateAndCity();
   console.log(state, city, "state and city having");
 
-  const handleAddPartners = async (data) => {
+  const handleUpdatePartners = async (data) => {
     try {
       const formData = new FormData();
       formData.append("restaurantPic", restaurantPic);
       formData.append("state", state);
       formData.append("city", city);
+      formData.append("restaurantId", restaurantId);
 
       for (const key in data) {
         formData.append(key, data[key]);
       }
-      const response = await axios.post(`${ServerAPI}addPartners`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.put(
+        `${ServerAPI}updatePartners/${restaurantId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       if (response.data.success) {
         navigate("/partners");
       } else {
@@ -56,14 +65,43 @@ const Add_Partners_page = () => {
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${ServerAPI}getPartnerToUpdate/${restaurantId}`
+        );
+        if (response.data.success) {
+          const restaurantData = response.data.RestaurantData;
+          setValue("restaurant", restaurantData.restaurant);
+          setValue("location", restaurantData.location);
+          setValue("link", restaurantData.link);
+          setValue("restaurantPic", restaurantData.restaurantPic);
+          if (restaurantData.restaurantPic) {
+            setRestaurantPic(restaurantData.restaurantPic);
+            const imageUrl = restaurantData.restaurantPic;
+            if (setPreviewImage) {
+              setPreviewImage(imageUrl);
+            }
+          }
+        } else {
+          console.log(response.data.message);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [state, city, restaurantId, setValue]);
+
   return (
     <div className="p-4 w-full">
       <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700  flex justify-center">
         <div className="w-full max-w-4xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-          <form onSubmit={handleSubmit(handleAddPartners)}>
+          <form onSubmit={handleSubmit(handleUpdatePartners)}>
             <div className="mb-6">
               <h3 className="w-full text-center text-xl text-black my-5">
-                Add Partners Restaurant
+                Update Partners Restaurant
               </h3>
               <label
                 for="restaurant"
@@ -181,14 +219,17 @@ const Add_Partners_page = () => {
 
                 <input
                   id="restaurantPic"
-                  {...register("restaurantPic", { required: true })}
+                  // {...register("restaurantPic", { required: true })}
                   type="file"
                   className="hidden"
                   accept="image/*"
                   onChange={handleRestaurantPic}
                 />
               </label>
-
+              {/* <p className="text-sm text-gray-500 dark:text-gray-400">
+                Selected file:{" "}
+                {restaurantPic ? restaurantPic : "No file selected"}
+              </p> */}
               <div className="w-1/2 p-3 h-52">
                 <div className="border border-white h-full">
                   {previewImage && (
@@ -234,4 +275,4 @@ const Add_Partners_page = () => {
   );
 };
 
-export default Add_Partners_page;
+export default Update_partners_page;
