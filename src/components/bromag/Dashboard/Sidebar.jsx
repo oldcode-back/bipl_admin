@@ -58,7 +58,7 @@ const Sidebar = () => {
   ];
 
   return (
-    <>
+    <div>
       <button
         data-drawer-target="logo-sidebar"
         data-drawer-toggle="logo-sidebar"
@@ -84,7 +84,7 @@ const Sidebar = () => {
 
       <aside
         id="logo-sidebar"
-        class="fixed top-0 left-0 z-40 w-80 h-screen transition-transform -translate-x-full sm:translate-x-0"
+        class=" top-0 left-0 z-40 w-80 h-screen transition-transform -translate-x-full sm:translate-x-0"
         aria-label="Sidebar"
       >
         <div class="h-full px-3 py-3 overflow-y-auto bg-black dark:bg-gray-800">
@@ -94,10 +94,10 @@ const Sidebar = () => {
               class="h-10 w-8 sm:h-7 "
               alt="Flowbite Logo"
             />
-            {/* <span class="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
+            <span class="self-center text-xl font-semibold whitespace-nowrap text-white">
               Bromag India Pvt Ltd
-            </span> */}
-            <select
+            </span>
+            {/* <select
               name="state"
               id="state"
               className="w-32 text-center py-1 bg-white border text-xs border-black rounded-lg focus:outline-none px-1"
@@ -118,7 +118,7 @@ const Sidebar = () => {
               <option value="">City 1</option>
               <option value="">City 2</option>
               <option value="">City 3</option>
-            </select>
+            </select> */}
           </div>
           <ul class="space-y-2 font-medium">
             <li>
@@ -311,7 +311,7 @@ const Sidebar = () => {
           </ul>
         </div>
       </aside>
-    </>
+    </div>
   );
 };
 
