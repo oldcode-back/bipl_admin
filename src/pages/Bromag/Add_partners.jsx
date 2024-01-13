@@ -6,12 +6,11 @@ import Navbar from "../../components/bromag/Dashboard/Navbar";
 const Add_partners = () => {
   return (
     <>
-    <Navbar/>
-    <div className="flex">
-    <Sidebar />
-      <Add_Partners_page />
-    </div>
-     
+      <Navbar />
+      <div className="flex">
+        <Sidebar />
+        <Add_Partners_page />
+      </div>
     </>
   );
 };

@@ -4,9 +4,10 @@ import { ServerAPI } from "../../../config/backendApi";
 import { useForm } from "react-hook-form";
 import { useNavigate } from "react-router-dom";
 import { useStateAndCity } from "../../../utils/StateAndCityContext";
+import toast from "react-hot-toast";
 
-const Add_Partners_page = () => {
-  const [restaurantPic, setRestaurantPic] = useState("");
+const Add_banner_image = () => {
+  const [bannerPic, setBannerPic] = useState("");
   const [previewImage, setPreviewImage] = useState(null);
 
   const {
@@ -16,12 +17,12 @@ const Add_Partners_page = () => {
   } = useForm();
   const navigate = useNavigate();
 
-  const handleRestaurantPic = (e) => {
+  const handleBannerPic = (e) => {
     if (!e.target.files) {
       return;
     }
     const image = e.target.files[0];
-    setRestaurantPic(image);
+    setBannerPic(image);
     const imageUrl = URL.createObjectURL(image);
     setPreviewImage(imageUrl);
   };
@@ -29,27 +30,44 @@ const Add_Partners_page = () => {
   const { state, city } = useStateAndCity();
   console.log(state, city, "state and city having");
 
-  const handleAddPartners = async (data) => {
+  const handleAddMustVisit = async (data) => {
     try {
       const formData = new FormData();
-      formData.append("restaurantPic", restaurantPic);
+      formData.append("bannerPic", bannerPic);
       formData.append("state", state);
       formData.append("city", city);
 
       for (const key in data) {
         formData.append(key, data[key]);
       }
-      const response = await axios.post(`${ServerAPI}addPartners`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      const response = await axios.post(
+        `${ServerAPI}addMustVisitBanner`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
       if (response.data.success) {
-        navigate("/partners");
+        toast.success(response.data.message, {
+          duration: 3000,
+          position: "top-center",
+          style: {
+            background: "#B00043",
+            color: "#fff",
+          },
+        });
+        navigate("/must-visit-banner");
       } else {
-        // Display error toast
-        console.log(response.data.message);
-        // toastError(response.data.message)
+        toast.error(response.data.message, {
+          duration: 3000,
+          position: "top-center",
+          style: {
+            background: "#B00043",
+            color: "#fff",
+          },
+        });
       }
     } catch (error) {
       console.error("Error:", error);
@@ -57,101 +75,51 @@ const Add_Partners_page = () => {
   };
 
   return (
-    <div className="p-4  w-full xs:ml-80 ">
+    <div className="p-4  w-full xs:ml-80">
       <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700  flex justify-center">
         <div className="w-full max-w-4xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-          <form onSubmit={handleSubmit(handleAddPartners)}>
+          <form onSubmit={handleSubmit(handleAddMustVisit)}>
             <div className="mb-6">
               <h3 className="w-full text-center text-xl text-black my-5">
-                Add Partners Restaurant
+                Add Must Visit Banner
               </h3>
               <label
-                for="restaurant"
+                for="banner"
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
               >
-                Restaurant Name
+                Banner Name
               </label>
               <input
                 type="text"
-                id="restaurant"
-                {...register("restaurant", {
+                id="banner"
+                {...register("banner", {
                   required: true,
                   pattern: /^[a-zA-Z0-9'-]+(?:\s[a-zA-Z0-9'-]+)*$/,
                 })}
-                placeholder="Enter restaurant name"
+                placeholder="Enter banner name"
                 className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
-              {errors.restaurant && errors.restaurant.type === "required" && (
+              {errors.banner && errors.banner.type === "required" && (
                 <label className="error-msg text-sm text-red-600">
-                  Please enter the restaurant name
+                  Please enter the banner name
                 </label>
               )}
-              {errors.restaurant && errors.restaurant.type === "pattern" && (
+              {errors.banner && errors.banner.type === "pattern" && (
                 <label className="error-msg text-sm text-red-600">
-                  Please enter a valid restaurant name
-                </label>
-              )}
-            </div>
-            <div className="mb-6">
-              <label
-                for="location"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Location
-              </label>
-              <input
-                type="text"
-                id="location"
-                {...register("location", {
-                  required: true,
-                  pattern: /^[a-zA-Z0-9'-]+(?:\s[a-zA-Z0-9'-]+)*$/,
-                })}
-                placeholder="Enter location"
-                className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              />
-              {errors.location && errors.location.type === "required" && (
-                <label className="error-msg text-sm text-red-600">
-                  Please enter the location name
-                </label>
-              )}
-              {errors.location && errors.location.type === "pattern" && (
-                <label className="error-msg text-sm text-red-600">
-                  Please enter a valid location name
+                  Please enter a valid banner name
                 </label>
               )}
             </div>
-            <div className="mb-6">
-              <label
-                for="link"
-                className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
-              >
-                Web Link
-              </label>
-              <input
-                type="text"
-                id="link"
-                {...register("link", {
-                  required: true,
-                  pattern:
-                    /^(https?:\/\/)?(www\.)?([a-zA-Z0-9-]+(\.[a-zA-Z]{2,})+)(\/[^\s]*)?$/,
-                })}
-                placeholder="Enter link"
-                className="bg-gray-50  border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              />
-              {errors.link && errors.link.type === "required" && (
-                <label className="error-msg text-sm text-red-600">
-                  Please enter the web link name
-                </label>
-              )}
-              {errors.link && errors.link.type === "pattern" && (
-                <label className="error-msg text-sm text-red-600">
-                  Please enter a valid web link name
-                </label>
-              )}
-            </div>
+
+            <label
+              for="location"
+              className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+            >
+              Banner Image
+            </label>
             <div className="flex items-center justify-between w-full ">
               <label
-                for="restaurantPic"
+                for="bannerPic"
                 className="flex flex-col items-center justify-center w-1/2 h-52 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:hover:bg-bray-800 dark:bg-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:hover:border-gray-500 dark:hover:bg-gray-600"
               >
                 <div className="flex flex-col items-center justify-center pt-5 pb-6">
@@ -180,12 +148,12 @@ const Add_Partners_page = () => {
                 </div>
 
                 <input
-                  id="restaurantPic"
-                  {...register("restaurantPic", { required: true })}
+                  id="bannerPic"
+                  {...register("bannerPic", { required: true })}
                   type="file"
                   className="hidden"
                   accept="image/*"
-                  onChange={handleRestaurantPic}
+                  onChange={handleBannerPic}
                 />
               </label>
 
@@ -201,12 +169,11 @@ const Add_Partners_page = () => {
                 </div>
               </div>
             </div>
-            {errors.restaurantPic &&
-              errors.restaurantPic.type === "required" && (
-                <label className="error-msg text-sm text-red-600">
-                  Please upload an image of restaurant
-                </label>
-              )}
+            {errors.bannerPic && errors.bannerPic.type === "required" && (
+              <label className="error-msg text-sm text-red-600">
+                Please upload an image for banner
+              </label>
+            )}
 
             <div className="w-full h-28 flex justify-center items-center">
               <div className="w-1/2">
@@ -219,7 +186,7 @@ const Add_Partners_page = () => {
                 <button
                   type="button"
                   onClick={() => {
-                    navigate("/partners");
+                    navigate("/must-visit-banner");
                   }}
                   className=" border border-red-500 text-red-500 hover:bg-red-500 hover:text-white  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
                 >
@@ -234,4 +201,4 @@ const Add_Partners_page = () => {
   );
 };
 
-export default Add_Partners_page;
+export default Add_banner_image;

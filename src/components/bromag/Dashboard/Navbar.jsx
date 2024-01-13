@@ -90,17 +90,25 @@ const Navbar = () => {
                       <select
                         name="state"
                         id="state"
+                        value={state}
                         onChange={(e) => {
                           handleStateSubmit(e);
                         }}
                         className="w-full text-center py-1 bg-transparent placeholder:text-black appearance-none focus:outline-none px-1"
                       >
-                        {/* <option value={"Select city"} className={`${isEmpty(state) ?"block":"hidden"}`}>Select State</option> */}
-                        <option value="">
-                          {stateName === "" || stateName === undefined
-                            ? "Select state name"
-                            : stateName}
+                        <option
+                          value={"Select State"}
+                          className={`${
+                            isEmpty(state) && dummy ? "block" : "hidden"
+                          }`}
+                        >
+                          Select State
                         </option>
+                        {/* <option value="">
+                          {stateName === "" || stateName === undefined
+                            ? "Select state"
+                            : stateName}
+                        </option> */}
 
                         {indianStates.map((res, index) => (
                           <option key={index} value={res}>

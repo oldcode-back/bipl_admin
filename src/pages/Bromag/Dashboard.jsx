@@ -1,12 +1,14 @@
-import React from 'react';
-import Sidebar from '../../components/bromag/Dashboard/Sidebar';
+import React from "react";
+import Sidebar from "../../components/bromag/Dashboard/Sidebar";
+import Navbar from "../../components/bromag/Dashboard/Navbar";
 
 const Dashboard = () => {
   return (
     <>
-      <Sidebar/>
+      <Navbar />
+      <Sidebar />
     </>
   );
-}
+};
 
 export default Dashboard;
