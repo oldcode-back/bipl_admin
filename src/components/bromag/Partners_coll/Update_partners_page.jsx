@@ -95,7 +95,7 @@ const Update_partners_page = () => {
   }, [state, city, restaurantId, setValue]);
 
   return (
-    <div className="p-4 w-full">
+    <div className="p-4 w-full xs:ml-80">
       <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700  flex justify-center">
         <div className="w-full max-w-4xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
           <form onSubmit={handleSubmit(handleUpdatePartners)}>

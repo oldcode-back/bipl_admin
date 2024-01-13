@@ -1,16 +1,51 @@
-import React from "react";
+import React, { useState } from "react";
 import { BromagLogo, Lookout2 } from "../../../assets/images";
 import { useNavigate } from "react-router-dom";
+import { useForm } from "react-hook-form";
+import { ServerAPI } from "../../../config/backendApi";
+import axios from "axios";
+import { IoEye, IoEyeOff } from "react-icons/io5";
+import { toast } from "react-hot-toast";
 
 const Login = () => {
+  const [show, setShow] = useState(false);
 
-    
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
+
   const navigate = useNavigate();
 
-  const handleLoginSubmit = () => {
-    navigate("/dashboard")
+  const handleShow = () => {
+    setShow(!show);
   };
+  const handleLoginSubmit = async (data) => {
+    const response = await axios.post(`${ServerAPI}login`, {
+      data: data,
+    });
 
+    if (response.data.success) {
+      localStorage.setItem(
+        "access",
+        JSON.stringify(response.data.necessaryData.token)
+      );
+      // let impData = response.data.necessaryData;
+      // dispatch(companyDetails(impData));
+      toast.success(response.data.message, {
+        duration: 3000,
+        position: "top-center",
+        style: {
+          background: "#B00043",
+          color: "#fff",
+        },
+      });
+      navigate("/dashboard");
+    } else {
+      console.log(response.data.message);
+    }
+  };
 
   return (
     <div>
@@ -31,7 +66,10 @@ const Login = () => {
               <h1 class="text-xl text-center font-bold leading-tight tracking-tight text-gray-900 md:text-2xl dark:text-white">
                 Welcome back
               </h1>
-              <form class="space-y-4 md:space-y-6" action="#">
+              <form
+                class="space-y-4 md:space-y-6"
+                onSubmit={handleSubmit(handleLoginSubmit)}
+              >
                 <div>
                   <label
                     for="username"
@@ -39,16 +77,25 @@ const Login = () => {
                   >
                     Enter username
                   </label>
-                  <input
-                    type="text"
-                    name="username"
-                    id="username"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    placeholder="username"
-                    required=""
-                  />
+
+                  <div className="form-input">
+                    <input
+                      type="text"
+                      name="username"
+                      {...register("username", { required: true })}
+                      id="username"
+                      class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      placeholder="username"
+                      required=""
+                    />
+                  </div>
+                  {errors.username && errors.username.type === "required" && (
+                    <label className="text-red-500 text-sm">
+                      * Please enter the username
+                    </label>
+                  )}
                 </div>
-                <div>
+                <div className="relative">
                   <label
                     for="password"
                     class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
@@ -56,22 +103,34 @@ const Login = () => {
                     Password
                   </label>
                   <input
-                    type="password"
                     name="password"
+                    {...register("password", { required: true })}
+                    type={show ? "text" : "password"}
                     id="password"
-                    placeholder="••••••••"
-                    class="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                    required=""
+                    className="bg-gray-50 border border-gray-300 text-gray-900 sm:text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                    placeholder="password"
                   />
+                  <button
+                    type="button"
+                    className="eye-btn absolute right-4 pb-10 transform -translate-y-1/2"
+                    onClick={handleShow}
+                  >
+                    {show ? <IoEyeOff /> : <IoEye />}
+                  </button>
+                  <label className="text-red-500 text-sm h-5">
+                    {errors.password && errors.password.type === "required" ? (
+                      <>* Please enter the password</>
+                    ) : null}
+                  </label>
                 </div>
-                <div class="flex items-center justify-between">
+                {/* <div class="flex items-center justify-between">
                   <a
                     href="#"
                     class="text-sm font-medium text-primary-600 hover:underline dark:text-primary-500"
                   >
                     Forgot password?
                   </a>
-                </div>
+                </div> */}
                 <button
                   type="submit"
                   onClick={handleLoginSubmit}

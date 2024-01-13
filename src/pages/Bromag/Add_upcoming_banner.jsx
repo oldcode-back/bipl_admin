@@ -1,18 +1,18 @@
 import React from "react";
 import Sidebar from "../../components/bromag/Dashboard/Sidebar";
-import Add_Upcoming_page from "../../components/bromag/Upcoming_coll/Add_Upcoming_page";
 import Navbar from "../../components/bromag/Dashboard/Navbar";
+import Add_banner_image from "../../components/bromag/Upcoming_banner/Add_banner_image";
 
-const Add_upcoming = () => {
+const Add_upcoming_banner = () => {
   return (
     <>
       <Navbar />
       <div className="flex">
         <Sidebar />
-        <Add_Upcoming_page />
+        <Add_banner_image />
       </div>
     </>
   );
 };
 
-export default Add_upcoming;
+export default Add_upcoming_banner;

@@ -9,8 +9,14 @@ const Sidebar = () => {
   const [collections, setCollections] = useState(false);
   const [banners, setBanners] = useState(false);
 
-
   const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem("access");
+    localStorage.removeItem("state");
+    localStorage.removeItem("city");
+    navigate("/");
+  };
 
   const handleCollection = () => {
     setCollections(!collections);
@@ -89,36 +95,14 @@ const Sidebar = () => {
       >
         <div class="h-full px-3 py-3 overflow-y-auto bg-black dark:bg-gray-800">
           <div class="flex items-center mb-5">
-            <img
+            {/* <img
               src={BromagLogo}
               class="h-10 w-8 sm:h-7 "
               alt="Flowbite Logo"
-            />
+            /> */}
             <span class="self-center text-xl font-semibold whitespace-nowrap text-white">
               Bromag India Pvt Ltd
             </span>
-            {/* <select
-              name="state"
-              id="state"
-              className="w-32 text-center py-1 bg-white border text-xs border-black rounded-lg focus:outline-none px-1"
-            >
-              <option value="">Select your state</option>
-              {indianStates.map((state, index) => (
-                <option key={index} value={state}>
-                  {state}
-                </option>
-              ))}
-            </select>
-            <select
-              name="state"
-              id="state"
-              className="w-28 text-center py-1 px-1 ml-2 bg-white border text-xs border-black rounded-lg focus:outline-none"
-            >
-              <option value="">Select your city</option>
-              <option value="">City 1</option>
-              <option value="">City 2</option>
-              <option value="">City 3</option>
-            </select> */}
           </div>
           <ul class="space-y-2 font-medium">
             <li>
@@ -221,10 +205,10 @@ const Sidebar = () => {
             {banners && (
               <li>
                 <a
-                  // onClick={()=>{
-                  //     setCollections(true)
-                  //     navigate("/partners")
-                  // }}
+                  onClick={() => {
+                    setCollections(true);
+                    navigate("/partners-banner");
+                  }}
                   class="flex justify-center items-center p-2 text-white hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <span class="flex justify-center  whitespace-nowrap">
@@ -232,10 +216,10 @@ const Sidebar = () => {
                   </span>
                 </a>
                 <a
-                  // onClick={()=>{
-                  //     setCollections(true)
-                  //     navigate("/must-visit")
-                  // }}
+                  onClick={()=>{
+                      setCollections(true)
+                      navigate("/must-visit-banner")
+                  }}
                   class="flex justify-center items-center p-2 text-white hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <span class="flex justify-center ms-2 whitespace-nowrap">
@@ -243,10 +227,10 @@ const Sidebar = () => {
                   </span>
                 </a>
                 <a
-                  //   onClick={()=>{
-                  //     setCollections(true)
-                  //     navigate("/upcoming")
-                  // }}
+                    onClick={()=>{
+                      setCollections(true)
+                      navigate("/upcoming-banner")
+                  }}
                   class="flex justify-center items-center p-2 text-white hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <span class="flex justify-center ms-4 whitespace-nowrap">
@@ -287,7 +271,7 @@ const Sidebar = () => {
             </li>
             <li>
               <a
-                href="#"
+                onClick={handleLogout}
                 class="flex items-center p-2 text-white hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <svg
