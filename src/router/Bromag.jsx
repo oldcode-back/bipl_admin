@@ -16,6 +16,12 @@ import Add_must_visit_banner from "../pages/Bromag/Add_must_visit_banner";
 import Add_upcoming_banner from "../pages/Bromag/Add_upcoming_banner";
 import Upcoming_banner from "../pages/Bromag/Upcoming_banner";
 import Must_visit_banner from "../pages/Bromag/Must_visit_banner";
+import Update_must_visit from "../pages/Bromag/Update_must_visit";
+import Update_upcoming_page from "../components/bromag/Upcoming_coll/Update_upcoming_page";
+import Update_upcoming from "../pages/Bromag/Update_upcoming";
+import Add_team_members from "../pages/Bromag/Add_team_members";
+import Team from "../pages/Bromag/Team";
+import Update_team_member_data from "../pages/Bromag/Update_team_member_data";
 
 const Bromag = () => {
   return (
@@ -96,11 +102,29 @@ const Bromag = () => {
           }
         />
         <Route
+          path="/update-must-visit/:restaurantId"
+          element={
+            <>
+              <BromagAccess />
+              <Update_must_visit />
+            </>
+          }
+        />
+        <Route
           path="/update-partners/:restaurantId"
           element={
             <>
               <BromagAccess />
               <Update_partners />
+            </>
+          }
+        />
+        <Route
+          path="/update-upcoming/:restaurantId"
+          element={
+            <>
+              <BromagAccess />
+              <Update_upcoming />
             </>
           }
         />
@@ -113,7 +137,7 @@ const Bromag = () => {
             </>
           }
         />
-         <Route
+        <Route
           path="/add-partners-banner"
           element={
             <>
@@ -131,7 +155,7 @@ const Bromag = () => {
             </>
           }
         />
-         <Route
+        <Route
           path="/add-must-visit-banner"
           element={
             <>
@@ -149,12 +173,39 @@ const Bromag = () => {
             </>
           }
         />
-         <Route
+        <Route
           path="/add-upcoming-banner"
           element={
             <>
               <BromagAccess />
               <Add_upcoming_banner />
+            </>
+          }
+        />
+        <Route
+          path="/add-team"
+          element={
+            <>
+              <BromagAccess />
+              <Add_team_members />
+            </>
+          }
+        />
+        <Route
+          path="/team"
+          element={
+            <>
+              <BromagAccess />
+              <Team />
+            </>
+          }
+        />
+        <Route
+          path="/update-employee-data/:memberId"
+          element={
+            <>
+              <BromagAccess />
+              <Update_team_member_data />
             </>
           }
         />

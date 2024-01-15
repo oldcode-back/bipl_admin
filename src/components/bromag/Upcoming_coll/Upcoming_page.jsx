@@ -103,7 +103,7 @@ const Upcoming_page = () => {
             Add Restaurant
           </button>
         </div>
-        <div className="overflow-x-auto mt-4">
+        <div className="overflow-x-auto mt-4 h-[536px]">
           <table className="w-full text-sm text-left  text-gray-500 dark:text-gray-400">
             <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
               <tr>
@@ -133,7 +133,7 @@ const Upcoming_page = () => {
                   <td className="px-6 py-4 flex justify-center space-x-2">
                     <button
                       onClick={() => {
-                        navigate(`/update-partners/${restaurant._id}`);
+                        navigate(`/update-upcoming/${restaurant._id}`);
                       }}
                       className="flex p-2.5 bg-yellow-500 rounded-xl hover:rounded-3xl hover:bg-yellow-600 transition-all duration-300 text-white"
                     >
