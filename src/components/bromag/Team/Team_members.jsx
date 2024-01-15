@@ -1,31 +1,31 @@
 import React, { useEffect, useState } from "react";
-import { FaEdit } from "react-icons/fa";
 import { MdDelete } from "react-icons/md";
 import { useNavigate } from "react-router-dom";
-import { useStateAndCity } from "../../../utils/StateAndCityContext";
-import axios from "axios";
 import { ServerAPI } from "../../../config/backendApi";
+import axios from "axios";
+import { useStateAndCity } from "../../../utils/StateAndCityContext";
+import { Image } from "antd";
 import toast from "react-hot-toast";
+import { FaEdit } from "react-icons/fa";
 
-const Must_visit_page = () => {
-  const [MustVisit, setMustVisit] = useState([]);
+const Team_members = () => {
+  const [TeamMembers, setTeamMembers] = useState([]);
   const [refresh, setRefresh] = useState(true);
 
   const navigate = useNavigate();
-
   const { state, city, loading } = useStateAndCity();
 
   useEffect(() => {
-    const handleMustVisit = async () => {
+    const handleTeamMembers = async () => {
       try {
-        const response = await axios.get(`${ServerAPI}mustVisit`, {
+        const response = await axios.get(`${ServerAPI}teamMembers`, {
           params: {
             state: state,
             city: city,
           },
         });
         if (response.data.success) {
-          setMustVisit(response.data.MustVisit);
+          setTeamMembers(response.data.TeamMembers);
         } else {
           console.log(response.data.message);
         }
@@ -35,17 +35,21 @@ const Must_visit_page = () => {
     };
 
     if (!loading) {
-      handleMustVisit();
+      handleTeamMembers();
     }
   }, [state, city, loading, refresh]);
 
-  const handleRestaurantDrop = async (restaurantId) => {
+  const handleTeamMemberDrop = async (memberId) => {
     try {
-      const response = await axios.post(`${ServerAPI}deleteMustVisitData`, {
-        restaurantId: restaurantId,
+      const response = await axios.post(`${ServerAPI}deleteTeamMember`, {
+        memberId: memberId,
       });
-
       if (response.data.success) {
+        if (refresh === true) {
+          setRefresh(false);
+        } else {
+          setRefresh(true);
+        }
         toast.success(response.data.message, {
           duration: 3000,
           position: "top-center",
@@ -54,11 +58,6 @@ const Must_visit_page = () => {
             color: "#fff",
           },
         });
-        if (refresh === true) {
-          setRefresh(false);
-        } else {
-          setRefresh(true);
-        }
       } else {
         toast.error(response.data.message, {
           duration: 3000,
@@ -85,18 +84,16 @@ const Must_visit_page = () => {
   return (
     <div class="p-4  w-full xs:ml-80">
       <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-        <h3 className="w-full text-center text-xl text-black ">
-          Must visit Restaurant
-        </h3>
+        <h3 className="w-full text-center text-xl text-black ">Team Members</h3>
         <div className="flex justify-end">
           <button
             type="button"
             onClick={() => {
-              navigate("/add-must-visit");
+              navigate("/add-team");
             }}
             class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
           >
-            Add Restaurant
+            Add Team member
           </button>
         </div>
         <div className="overflow-x-auto mt-4 h-[536px]">
@@ -107,50 +104,63 @@ const Must_visit_page = () => {
                   SI No
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Restaurant name
+                  Employee name
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Restaurant location
+                  Employee's photo
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Restaurant Rate
+                  Designation
+                </th>
+                <th scope="col" className="px-6 py-3">
+                  About
                 </th>
                 <th scope="col" className="px-6 py-3 flex justify-center">
-                  Active
+                  Actions
                 </th>
               </tr>
             </thead>
             <tbody>
-              {MustVisit &&
-                MustVisit.map((restaurant, i) => (
-                  <tr
-                    key={restaurant._id}
-                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                  >
-                    <td className="px-6 py-4">{i + 1}</td>
-                    <td className="px-6 py-4">{restaurant.restaurant}</td>
-                    <td className="px-6 py-4">{restaurant.location}</td>
-                    <td className="px-6 py-4">{restaurant.rate}</td>
-                    <td className="px-6 py-4 flex justify-center space-x-2">
-                      <button
-                        onClick={() => {
-                          navigate(`/update-must-visit/${restaurant._id}`);
-                        }}
-                        class="flex p-2.5 bg-yellow-500 rounded-xl hover:rounded-3xl hover:bg-yellow-600 transition-all duration-300 text-white"
-                      >
-                        <FaEdit class="h-6 w-6" />
-                      </button>
-                      <button
-                        onClick={() => {
-                          handleRestaurantDrop(restaurant._id);
-                        }}
-                        class="flex p-2.5 bg-yellow-500 rounded-xl hover:rounded-3xl hover:bg-yellow-600 transition-all duration-300 text-white"
-                      >
-                        <MdDelete class="h-6 w-6" />
-                      </button>
-                    </td>
-                  </tr>
-                ))}
+              {TeamMembers.map((restaurant, i) => (
+                <tr
+                  key={restaurant._id}
+                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                >
+                  <td className="px-6 py-4">{i + 1}</td>
+                  <td className="px-6 py-4">{restaurant.employee}</td>
+                  <td className="px-6 py-4">
+                    <Image
+                      width={150}
+                      height={100}
+                      src={restaurant.photo}
+                      preview={{
+                        src: restaurant.photo,
+                      }}
+                    />
+                  </td>
+
+                  <td className="px-6 py-4">{restaurant.designation}</td>
+                  <td className="px-6 py-4">{restaurant.about}</td>
+                  <td className="px-6 py-4 flex justify-center space-x-2">
+                    <button
+                      onClick={() => {
+                        navigate(`/update-employee-data/${restaurant._id}`);
+                      }}
+                      class="flex p-2.5 bg-yellow-500 rounded-xl hover:rounded-3xl hover:bg-yellow-600 transition-all duration-300 text-white"
+                    >
+                      <FaEdit class="h-6 w-6" />
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleTeamMemberDrop(restaurant._id);
+                      }}
+                      class="flex p-2.5 bg-yellow-500 rounded-xl hover:rounded-3xl hover:bg-yellow-600 transition-all duration-300 text-white"
+                    >
+                      <MdDelete class="h-6 w-6" />
+                    </button>
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>
@@ -159,4 +169,4 @@ const Must_visit_page = () => {
   );
 };
 
-export default Must_visit_page;
+export default Team_members;
