@@ -204,6 +204,17 @@ const Sidebar = () => {
             </li>
             {banners && (
               <li>
+                 <a
+                  onClick={()=>{
+                      setCollections(true)
+                      navigate("/home-banners")
+                  }}
+                  class="flex justify-center mr-8 items-center p-2 text-white hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                >
+                  <span class="flex justify-center whitespace-nowrap">
+                    Home banners
+                  </span>
+                </a>
                 <a
                   onClick={() => {
                     setCollections(true);
@@ -253,7 +264,9 @@ const Sidebar = () => {
             </li>
             <li>
               <a
-                href="#"
+                 onClick={()=>{
+                  navigate("/lookout-table")
+                }}
                 class="flex items-center p-2 text-white hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <BiSolidVideos class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
