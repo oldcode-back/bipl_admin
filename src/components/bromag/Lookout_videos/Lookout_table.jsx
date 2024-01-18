@@ -100,7 +100,7 @@ const Lookout_table = () => {
           Lookout Videos
         </h3>
         <div className="flex justify-end">
-        <button
+          <button
             type="button"
             onClick={() => {
               navigate("/add-lookout-videos");
@@ -108,8 +108,8 @@ const Lookout_table = () => {
             disabled={LookoutData.length >= 3}
             className={`text-white px-5 py-2.5 me-2 mb-2 rounded-lg text-sm focus:outline-none ${
               LookoutData.length >= 3
-                ? 'bg-gray-600 cursor-not-allowed opacity-60'
-                : 'bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700'
+                ? "bg-gray-600 cursor-not-allowed opacity-60"
+                : "bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
             }`}
           >
             Add Videos
@@ -125,9 +125,7 @@ const Lookout_table = () => {
                 <th scope="col" className="px-6 py-3">
                   Description
                 </th>
-                {/* <th scope="col" className="px-6 py-3">
-                  Cover photo
-                </th> */}
+
                 <th scope="col" className="px-6 py-3">
                   Lookout video
                 </th>
@@ -145,27 +143,17 @@ const Lookout_table = () => {
                   <td className="px-6 py-4">{i + 1}</td>
                   <td className="px-6 py-4">{item.description}</td>
 
-                  {/* <td className="px-6 py-4">
-                    <Image
-                      width={150}
-                      height={100}
-                      src={item.coverPic}
-                      preview={{
-                        src: item.coverPic,
-                      }}
-                    />
-                  </td> */}
-
                   <td className="px-6 py-4">
                     <video
                       width={150}
                       height={100}
                       onClick={() => openModal(item.lookoutVideo)}
-                      preview={{
-                        src: item.lookoutVideo,
-                      }}
-                    />
+                    >
+                      <source src={item.lookoutVideo} type="video/mp4" />
+                      Your browser does not support the video tag.
+                    </video>
                   </td>
+
                   {isModalOpen && selectedVideo && (
                     <div className="fixed top-1/4 left-1/4 w-[50%] h-[50%] bg-black bg-opacity-75 flex justify-center items-center">
                       <div className="relative">

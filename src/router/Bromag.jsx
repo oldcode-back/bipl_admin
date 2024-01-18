@@ -31,6 +31,7 @@ import Add_work_with_us_banner from "../pages/Bromag/Add_work_with_us_banner";
 import Add_who_we_are_banner from "../pages/Bromag/Add_who_we_are_banner";
 import Work_with_us_banner from "../pages/Bromag/Work_with_us_banner";
 import Who_we_are_banner from "../pages/Bromag/Who_we_are_banner";
+import Update_home_banner from "../pages/Bromag/Update_home_banner";
 
 const Bromag = () => {
   return (
@@ -260,6 +261,15 @@ const Bromag = () => {
             <>
               <BromagAccess />
               <Home_banners />
+            </>
+          }
+        />
+        <Route
+          path="/update-home-banners/:bannerId"
+          element={
+            <>
+              <BromagAccess />
+              <Update_home_banner />
             </>
           }
         />

@@ -6,6 +6,8 @@ import axios from "axios";
 import { useStateAndCity } from "../../../utils/StateAndCityContext";
 import { Image } from "antd";
 import toast from "react-hot-toast";
+import { FaEdit } from "react-icons/fa";
+
 
 const Home_banner_table = () => {
   const [HomeBanners, setHomeBanners] = useState([]);
@@ -137,7 +139,15 @@ const Home_banner_table = () => {
                       }}
                     />
                   </td>
-                  <td className="px-6 py-4 flex justify-center space-x-2 items-center">
+                  <td className="px-6 py-4 flex justify-center space-x-2">
+                    <button
+                      onClick={() => {
+                        navigate(`/update-home-banners/${Item._id}`);
+                      }}
+                      class="flex p-2.5 bg-yellow-500 rounded-xl hover:rounded-3xl hover:bg-yellow-600 transition-all duration-300 text-white"
+                    >
+                      <FaEdit class="h-6 w-6" />
+                    </button>
                     <button
                       onClick={() => {
                         handleItemDrop(Item._id);

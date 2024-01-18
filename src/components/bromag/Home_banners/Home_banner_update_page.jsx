@@ -2,19 +2,23 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { ServerAPI } from "../../../config/backendApi";
 import { useForm } from "react-hook-form";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useStateAndCity } from "../../../utils/StateAndCityContext";
+import { Button, Spin } from "antd";
 import toast from "react-hot-toast";
 
-const Add_banner_image = () => {
+const Home_banner_update_page = () => {
   const [bannerPic, setBannerPic] = useState("");
   const [previewImage, setPreviewImage] = useState(null);
 
+  const [loading, setLoading] = useState(false);
   const {
     register,
     handleSubmit,
+    setValue,
     formState: { errors },
   } = useForm();
+
   const navigate = useNavigate();
 
   const handleBannerPic = (e) => {
@@ -27,11 +31,15 @@ const Add_banner_image = () => {
     setPreviewImage(imageUrl);
   };
 
+  const { bannerId } = useParams();
+
   const { state, city } = useStateAndCity();
   console.log(state, city, "state and city having");
 
-  const handleAddHomeBanner = async (data) => {
+  const handleUpdateHomeBanner = async (data) => {
     try {
+      setLoading(true);
+
       const formData = new FormData();
       formData.append("bannerPic", bannerPic);
       formData.append("state", state);
@@ -40,11 +48,17 @@ const Add_banner_image = () => {
       for (const key in data) {
         formData.append(key, data[key]);
       }
-      const response = await axios.post(`${ServerAPI}addHomeBanner`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+
+      const response = await axios.put(
+        `${ServerAPI}updateHomeBanner/${bannerId}`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+
       if (response.data.success) {
         toast.success(response.data.message, {
           duration: 3000,
@@ -54,6 +68,7 @@ const Add_banner_image = () => {
             color: "#fff",
           },
         });
+
         navigate("/home-banners");
       } else {
         toast.error(response.data.message, {
@@ -67,19 +82,45 @@ const Add_banner_image = () => {
       }
     } catch (error) {
       console.error("Error:", error);
-    } finally {
-      setLoading(false);
     }
   };
 
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(
+          `${ServerAPI}getHomeBannerToUpdate/${bannerId}`
+        );
+        if (response.data.success) {
+          const BannerData = response.data.BannerData;
+          setValue("restaurant", BannerData.restaurant);
+          setValue("link", BannerData.link);
+          setValue("bannerPic", BannerData.bannerPic);
+          if (BannerData.bannerPic) {
+            setBannerPic(BannerData.bannerPic);
+            const imageUr = BannerData.bannerPic;
+            if (imageUr) {
+              setPreviewImage(imageUr);
+            }
+          }
+        } else {
+          console.log(response.data.message);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchData();
+  }, [state, city, bannerId, setValue]);
+
   return (
-    <div className="p-4  w-full xs:ml-80">
+    <div className="p-4 w-full xs:ml-80">
       <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700  flex justify-center">
-        <div className="w-full overflow-x-auto h-[628px] max-w-4xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-          <form onSubmit={handleSubmit(handleAddHomeBanner)}>
+        <div className="w-full  overflow-x-auto h-[628px] max-w-4xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
+          <form onSubmit={handleSubmit(handleUpdateHomeBanner)}>
             <div className="mb-6">
               <h3 className="w-full text-center text-xl text-black my-5">
-                Add Restaurant Banners
+                Update Home Banners
               </h3>
               <label
                 for="restaurant"
@@ -195,29 +236,37 @@ const Add_banner_image = () => {
                 </div>
               </div>
             </div>
-            {errors.bannerPic && errors.bannerPic.type === "required" && (
+            {/* {errors.bannerPic && errors.bannerPic.type === "required" && (
               <label className="error-msg text-sm text-red-600">
                 Please upload an image for banner
               </label>
-            )}
+            )} */}
 
             <div className="w-full h-28 flex justify-center items-center">
-              <div className="w-1/2">
-                <button
+              <div className="w-1/2 flex">
+                <Button
+                  type="submit"
+                  htmlType="submit"
+                  loading={loading}
+                  className="text-white bg-gray-800 me-2 hover:bg-gray-900 focus:outline-none focus:ring focus:border font-medium rounded-lg text-sm px-5  dark:bg-gray-700 dark:hover:bg-gray-800 dark:focus:ring dark:border-gray-700"
+                >
+                  Submit
+                </Button>
+                {/* <button
                   type="submit"
                   className="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
                 >
                   Submit
-                </button>
-                <button
+                </button> */}
+                <Button
                   type="button"
                   onClick={() => {
                     navigate("/home-banners");
                   }}
-                  className=" border border-red-500 text-red-500 hover:bg-red-500 hover:text-white  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
+                  className=" border border-red-500 text-red-500 hover:bg-red-500 hover:text-white  font-medium rounded-lg text-sm px-5 me-2 mb-2"
                 >
                   cancel
-                </button>
+                </Button>
               </div>
             </div>
           </form>
@@ -227,4 +276,4 @@ const Add_banner_image = () => {
   );
 };
 
-export default Add_banner_image;
+export default Home_banner_update_page;
