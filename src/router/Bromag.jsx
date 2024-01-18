@@ -22,6 +22,11 @@ import Update_upcoming from "../pages/Bromag/Update_upcoming";
 import Add_team_members from "../pages/Bromag/Add_team_members";
 import Team from "../pages/Bromag/Team";
 import Update_team_member_data from "../pages/Bromag/Update_team_member_data";
+import Add_lookout_videos from "../pages/Bromag/Add_lookout_videos";
+import Lookout_videos from "../pages/Bromag/Lookout_videos";
+import Update_lookout from "../pages/Bromag/Update_lookout";
+import Add_home_banner from "../pages/Bromag/Add_home_banner";
+import Home_banners from "../pages/Bromag/Home_banners";
 
 const Bromag = () => {
   return (
@@ -206,6 +211,51 @@ const Bromag = () => {
             <>
               <BromagAccess />
               <Update_team_member_data />
+            </>
+          }
+        />
+        <Route
+          path="/add-lookout-videos"
+          element={
+            <>
+              <BromagAccess />
+              <Add_lookout_videos />
+            </>
+          }
+        />
+        <Route
+          path="/lookout-table"
+          element={
+            <>
+              <BromagAccess />
+              <Lookout_videos />
+            </>
+          }
+        />
+         <Route
+          path="/update-lookout/:lookoutId"
+          element={
+            <>
+              <BromagAccess />
+              <Update_lookout />
+            </>
+          }
+        />
+         <Route
+          path="/add-home-banner"
+          element={
+            <>
+              <BromagAccess />
+              <Add_home_banner />
+            </>
+          }
+        />
+        <Route
+          path="/home-banners"
+          element={
+            <>
+              <BromagAccess />
+              <Home_banners />
             </>
           }
         />
