@@ -6,27 +6,25 @@ import axios from "axios";
 import { useStateAndCity } from "../../../utils/StateAndCityContext";
 import { Image } from "antd";
 import toast from "react-hot-toast";
-import { FaEdit } from "react-icons/fa";
 
-
-const Home_banner_table = () => {
-  const [HomeBanners, setHomeBanners] = useState([]);
+const Work_with_us_banner_table = () => {
+  const [WorkWithUsBanners, setWorkWithUsBanners] = useState([]);
   const [refresh, setRefresh] = useState(true);
 
   const navigate = useNavigate();
   const { state, city, loading } = useStateAndCity();
 
   useEffect(() => {
-    const handleHomeBanners = async () => {
+    const handleWorkWithUsBanners = async () => {
       try {
-        const response = await axios.get(`${ServerAPI}homeBanners`, {
+        const response = await axios.get(`${ServerAPI}workWithUsBanners`, {
           params: {
             state: state,
             city: city,
           },
         });
         if (response.data.success) {
-          setHomeBanners(response.data.HomeBanners);
+          setWorkWithUsBanners(response.data.WorkWithUsBanners);
         } else {
           console.log(response.data.message);
         }
@@ -36,13 +34,13 @@ const Home_banner_table = () => {
     };
 
     if (!loading) {
-      handleHomeBanners();
+      handleWorkWithUsBanners();
     }
   }, [state, city, loading, refresh]);
 
-  const handleItemDrop = async (bannerId) => {
+  const handleBannerDrop = async (bannerId) => {
     try {
-      const response = await axios.post(`${ServerAPI}deleteHomeBanner`, {
+      const response = await axios.post(`${ServerAPI}deleteWorkWithUsBanner`, {
         bannerId: bannerId,
       });
       if (response.data.success) {
@@ -74,7 +72,7 @@ const Home_banner_table = () => {
     }
   };
 
-  const ItemData = [
+  const restaurantData = [
     { id: 1, name: "Saravana Bhavan", location: "Chennai", active: true },
     { id: 2, name: "Murugan Idli Shop", location: "Madurai", active: true },
 
@@ -86,15 +84,20 @@ const Home_banner_table = () => {
     <div class="p-4  w-full xs:ml-80">
       <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
         <h3 className="w-full text-center text-xl text-black ">
-          Home Page Banners
+          Work With Us Banners
         </h3>
         <div className="flex justify-end">
           <button
             type="button"
             onClick={() => {
-              navigate("/add-home-banner");
+              navigate("/add-work-with-us-banner");
             }}
-            class="text-white bg-gray-800 hover:bg-gray-900 focus:outline-none focus:ring-4 focus:ring-gray-300 font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+            disabled={WorkWithUsBanners.length >= 5}
+            className={`text-white px-5 py-2.5 me-2 mb-2 rounded-lg text-sm focus:outline-none ${
+              WorkWithUsBanners.length >= 5
+                ? "bg-gray-600 cursor-not-allowed opacity-60"
+                : "bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:ring-gray-300 dark:bg-gray-800 dark:hover:bg-gray-700 dark:focus:ring-gray-700 dark:border-gray-700"
+            }`}
           >
             Add Banner
           </button>
@@ -107,58 +110,48 @@ const Home_banner_table = () => {
                   SI No
                 </th>
                 <th scope="col" className="px-6 py-3">
-                  Item name
-                </th>
-                <th scope="col" className="px-6 py-3">
-                  Web link
+                  Banner name
                 </th>
                 <th scope="col" className="px-6 py-3">
                   Banner Image
                 </th>
+
                 <th scope="col" className="px-6 py-3 flex justify-center">
                   Delete
                 </th>
               </tr>
             </thead>
             <tbody>
-              {HomeBanners.map((Item, i) => (
-                <tr
-                  key={Item.id}
-                  className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
-                >
-                  <td className="px-6 py-4">{i + 1}</td>
-                  <td className="px-6 py-4">{Item.restaurant}</td>
-                  <td className="px-6 py-4">{Item.link}</td>
-                  <td className="px-6 py-4">
-                    <Image
-                      width={150}
-                      height={100}
-                      src={Item.bannerPic}
-                      preview={{
-                        src: Item.bannerPic,
-                      }}
-                    />
-                  </td>
-                  <td className="px-6 py-4 flex justify-center space-x-2">
-                    <button
-                      onClick={() => {
-                        navigate(`/update-home-banners/${Item._id}`);
-                      }}
-                      class="flex p-2.5 bg-yellow-500 rounded-xl hover:rounded-3xl hover:bg-yellow-600 transition-all duration-300 text-white"
-                    >
-                      <FaEdit class="h-6 w-6" />
-                    </button>
-                    <button
-                      onClick={() => {
-                        handleItemDrop(Item._id);
-                      }}
-                      class="flex p-2.5 bg-yellow-500 rounded-xl hover:rounded-3xl hover:bg-yellow-600 transition-all duration-300 text-white"
-                    >
-                      <MdDelete class="h-6 w-6" />
-                    </button>
-                  </td>
-                </tr>
-              ))}
+              {WorkWithUsBanners &&
+                WorkWithUsBanners.map((item, i) => (
+                  <tr
+                    key={item.id}
+                    className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
+                  >
+                    <td className="px-6 py-4">{i + 1}</td>
+                    <td className="px-6 py-4">{item.bannerName}</td>
+                    <td className="px-6 py-4">
+                      <Image
+                        width={150}
+                        height={100}
+                        src={item.bannerPic}
+                        preview={{
+                          src: item.bannerPic,
+                        }}
+                      />
+                    </td>
+                    <td className="px-6 py-4 flex justify-center space-x-2 items-center">
+                      <button
+                        onClick={() => {
+                          handleBannerDrop(item._id);
+                        }}
+                        class="flex p-2.5 bg-yellow-500 rounded-xl hover:rounded-3xl hover:bg-yellow-600 transition-all duration-300 text-white"
+                      >
+                        <MdDelete class="h-6 w-6" />
+                      </button>
+                    </td>
+                  </tr>
+                ))}
             </tbody>
           </table>
         </div>
@@ -167,4 +160,4 @@ const Home_banner_table = () => {
   );
 };
 
-export default Home_banner_table;
+export default Work_with_us_banner_table;

@@ -27,6 +27,11 @@ import Lookout_videos from "../pages/Bromag/Lookout_videos";
 import Update_lookout from "../pages/Bromag/Update_lookout";
 import Add_home_banner from "../pages/Bromag/Add_home_banner";
 import Home_banners from "../pages/Bromag/Home_banners";
+import Add_work_with_us_banner from "../pages/Bromag/Add_work_with_us_banner";
+import Add_who_we_are_banner from "../pages/Bromag/Add_who_we_are_banner";
+import Work_with_us_banner from "../pages/Bromag/Work_with_us_banner";
+import Who_we_are_banner from "../pages/Bromag/Who_we_are_banner";
+import Update_home_banner from "../pages/Bromag/Update_home_banner";
 
 const Bromag = () => {
   return (
@@ -232,7 +237,7 @@ const Bromag = () => {
             </>
           }
         />
-         <Route
+        <Route
           path="/update-lookout/:lookoutId"
           element={
             <>
@@ -241,7 +246,7 @@ const Bromag = () => {
             </>
           }
         />
-         <Route
+        <Route
           path="/add-home-banner"
           element={
             <>
@@ -256,6 +261,51 @@ const Bromag = () => {
             <>
               <BromagAccess />
               <Home_banners />
+            </>
+          }
+        />
+        <Route
+          path="/update-home-banners/:bannerId"
+          element={
+            <>
+              <BromagAccess />
+              <Update_home_banner />
+            </>
+          }
+        />
+        <Route
+          path="/work-with-us-banners"
+          element={
+            <>
+              <BromagAccess />
+              <Work_with_us_banner />
+            </>
+          }
+        />
+        <Route
+          path="/add-work-with-us-banner"
+          element={
+            <>
+              <BromagAccess />
+              <Add_work_with_us_banner />
+            </>
+          }
+        />
+        <Route
+          path="/who-we-are-banners"
+          element={
+            <>
+              <BromagAccess />
+              <Who_we_are_banner />
+            </>
+          }
+        />
+        <Route
+          path="/add-who-we-are-banner"
+          element={
+            <>
+              <BromagAccess />
+              <Add_who_we_are_banner />
             </>
           }
         />
