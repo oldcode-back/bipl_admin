@@ -154,7 +154,7 @@ const Sidebar = () => {
                   class="flex justify-center items-center p-2 text-white hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <span class="flex justify-center  whitespace-nowrap">
-                    Partners restaurant
+                    Partners Restaurant
                   </span>
                 </a>
                 <a
@@ -165,7 +165,7 @@ const Sidebar = () => {
                   class="flex justify-center items-center p-2 text-white hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <span class="flex justify-center ms-2 whitespace-nowrap">
-                    Must visit restaurant
+                    Must Visit Restaurant
                   </span>
                 </a>
                 <a
@@ -176,7 +176,7 @@ const Sidebar = () => {
                   class="flex justify-center items-center p-2 text-white hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <span class="flex justify-center ms-4 whitespace-nowrap">
-                    Upcoming restaurant
+                    Upcoming Restaurant
                   </span>
                 </a>
               </li>
@@ -204,15 +204,15 @@ const Sidebar = () => {
             </li>
             {banners && (
               <li>
-                 <a
-                  onClick={()=>{
-                      setCollections(true)
-                      navigate("/home-banners")
+                <a
+                  onClick={() => {
+                    setCollections(true);
+                    navigate("/home-banners");
                   }}
                   class="flex justify-center mr-8 items-center p-2 text-white hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <span class="flex justify-center whitespace-nowrap">
-                    Home banners
+                    Home Banners
                   </span>
                 </a>
                 <a
@@ -223,29 +223,52 @@ const Sidebar = () => {
                   class="flex justify-center items-center p-2 text-white hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <span class="flex justify-center  whitespace-nowrap">
-                    Partners restaurant
+                    Partners Restaurant
                   </span>
                 </a>
                 <a
-                  onClick={()=>{
-                      setCollections(true)
-                      navigate("/must-visit-banner")
+                  onClick={() => {
+                    setCollections(true);
+                    navigate("/must-visit-banner");
                   }}
                   class="flex justify-center items-center p-2 text-white hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <span class="flex justify-center ms-2 whitespace-nowrap">
-                    Must visit restaurant
+                    Must Visit Restaurant
                   </span>
                 </a>
+
                 <a
-                    onClick={()=>{
-                      setCollections(true)
-                      navigate("/upcoming-banner")
+                  onClick={() => {
+                    setCollections(true);
+                    navigate("/upcoming-banner");
                   }}
                   class="flex justify-center items-center p-2 text-white hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
                 >
                   <span class="flex justify-center ms-4 whitespace-nowrap">
-                    Upcoming restaurant
+                    Upcoming Restaurant
+                  </span>
+                </a>
+                <a
+                  onClick={() => {
+                    setCollections(true);
+                    navigate("/who-we-are-banners");
+                  }}
+                  class="flex justify-center items-center p-2 text-white hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                >
+                  <span class="flex justify-center ms-2 whitespace-nowrap">
+                    Who We Are Banners
+                  </span>
+                </a>
+                <a
+                  onClick={() => {
+                    setCollections(true);
+                    navigate("/work-with-us-banners");
+                  }}
+                  class="flex justify-center items-center p-2 text-white hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
+                >
+                  <span class="flex justify-center ms-5 whitespace-nowrap">
+                    Work With Us Banners
                   </span>
                 </a>
               </li>
@@ -253,8 +276,8 @@ const Sidebar = () => {
 
             <li>
               <a
-                onClick={()=>{
-                  navigate("/team")
+                onClick={() => {
+                  navigate("/team");
                 }}
                 class="flex items-center p-2 text-white hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
@@ -264,14 +287,14 @@ const Sidebar = () => {
             </li>
             <li>
               <a
-                 onClick={()=>{
-                  navigate("/lookout-table")
+                onClick={() => {
+                  navigate("/lookout-table");
                 }}
                 class="flex items-center p-2 text-white hover:text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
               >
                 <BiSolidVideos class="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" />
                 <span class="flex-1 ms-3 whitespace-nowrap">
-                  Lookout our videos
+                  Lookout Our Videos
                 </span>
               </a>
             </li>

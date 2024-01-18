@@ -30,7 +30,7 @@ const Add_banner_image = () => {
   const { state, city } = useStateAndCity();
   console.log(state, city, "state and city having");
 
-  const handleUpcomingBanner = async (data) => {
+  const handleWhoWeAreBanners = async (data) => {
     try {
       const formData = new FormData();
       formData.append("bannerPic", bannerPic);
@@ -41,7 +41,7 @@ const Add_banner_image = () => {
         formData.append(key, data[key]);
       }
       const response = await axios.post(
-        `${ServerAPI}addUpcomingBanner`,
+        `${ServerAPI}addWhoWeAreBanner`,
         formData,
         {
           headers: {
@@ -58,7 +58,7 @@ const Add_banner_image = () => {
             color: "#fff",
           },
         });
-        navigate("/partners-banner");
+        navigate("/who-we-are-banners");
       } else {
         toast.error(response.data.message, {
           duration: 3000,
@@ -78,10 +78,10 @@ const Add_banner_image = () => {
     <div className="p-4  w-full xs:ml-80">
       <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700  flex justify-center">
         <div className="w-full overflow-x-auto h-[628px]  max-w-4xl p-4 bg-white border border-gray-200 rounded-lg shadow sm:p-8 dark:bg-gray-800 dark:border-gray-700">
-          <form onSubmit={handleSubmit(handleUpcomingBanner)}>
+          <form onSubmit={handleSubmit(handleWhoWeAreBanners)}>
             <div className="mb-6">
               <h3 className="w-full text-center text-xl text-black my-5">
-                Add Upcoming Banner
+                Add Who We Are Page Banner
               </h3>
               <label
                 for="banner"
@@ -186,7 +186,7 @@ const Add_banner_image = () => {
                 <button
                   type="button"
                   onClick={() => {
-                    navigate("/partners-banner");
+                    navigate("/who-we-are-banners");
                   }}
                   className=" border border-red-500 text-red-500 hover:bg-red-500 hover:text-white  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2"
                 >
