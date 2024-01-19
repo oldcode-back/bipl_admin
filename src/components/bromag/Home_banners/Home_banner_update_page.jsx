@@ -48,7 +48,6 @@ const Home_banner_update_page = () => {
       for (const key in data) {
         formData.append(key, data[key]);
       }
-
       const response = await axios.put(
         `${ServerAPI}updateHomeBanner/${bannerId}`,
         formData,
