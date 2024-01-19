@@ -6,6 +6,7 @@ import axios from "axios";
 import { useStateAndCity } from "../../../utils/StateAndCityContext";
 import { Image } from "antd";
 import toast from "react-hot-toast";
+import { FaEdit } from "react-icons/fa";
 
 const Partners_banner_table = () => {
   const [PartnersBanners, setPartnersBanners] = useState([]);
@@ -38,7 +39,7 @@ const Partners_banner_table = () => {
     }
   }, [state, city, loading, refresh]);
 
-  const handleRestaurantDrop = async (bannerId) => {
+  const handleItemDrop = async (bannerId) => {
     try {
       const response = await axios.post(`${ServerAPI}deletePartnersBanners`, {
         bannerId: bannerId,
@@ -72,7 +73,7 @@ const Partners_banner_table = () => {
     }
   };
 
-  const restaurantData = [
+  const ItemData = [
     { id: 1, name: "Saravana Bhavan", location: "Chennai", active: true },
     { id: 2, name: "Murugan Idli Shop", location: "Madurai", active: true },
 
@@ -83,7 +84,9 @@ const Partners_banner_table = () => {
   return (
     <div class="p-4  w-full xs:ml-80">
       <div class="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700">
-        <h3 className="w-full text-center text-xl text-black ">Partner's Page Banners</h3>
+        <h3 className="w-full text-center text-xl text-black ">
+          Partner's Page Banners
+        </h3>
         <div className="flex justify-end">
           <button
             type="button"
@@ -115,27 +118,35 @@ const Partners_banner_table = () => {
               </tr>
             </thead>
             <tbody>
-              {PartnersBanners.map((restaurant, i) => (
+              {PartnersBanners.map((Item, i) => (
                 <tr
-                  key={restaurant.id}
+                  key={Item.id}
                   className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
                 >
                   <td className="px-6 py-4">{i + 1}</td>
-                  <td className="px-6 py-4">{restaurant.bannerName}</td>
+                  <td className="px-6 py-4">{Item.bannerName}</td>
                   <td className="px-6 py-4">
                     <Image
                       width={150}
                       height={100}
-                      src={restaurant.bannerPic}
+                      src={Item.bannerPic}
                       preview={{
-                        src: restaurant.bannerPic,
+                        src: Item.bannerPic,
                       }}
                     />
                   </td>
-                  <td className="px-6 py-4 flex justify-center space-x-2 items-center">
+                  <td className="px-6 py-4 flex justify-center space-x-2">
                     <button
                       onClick={() => {
-                        handleRestaurantDrop(restaurant._id);
+                        navigate(`/update-partner-banner/${Item._id}`);
+                      }}
+                      class="flex p-2.5 bg-yellow-500 rounded-xl hover:rounded-3xl hover:bg-yellow-600 transition-all duration-300 text-white"
+                    >
+                      <FaEdit class="h-6 w-6" />
+                    </button>
+                    <button
+                      onClick={() => {
+                        handleItemDrop(Item._id);
                       }}
                       class="flex p-2.5 bg-yellow-500 rounded-xl hover:rounded-3xl hover:bg-yellow-600 transition-all duration-300 text-white"
                     >

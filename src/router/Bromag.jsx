@@ -32,6 +32,11 @@ import Add_who_we_are_banner from "../pages/Bromag/Add_who_we_are_banner";
 import Work_with_us_banner from "../pages/Bromag/Work_with_us_banner";
 import Who_we_are_banner from "../pages/Bromag/Who_we_are_banner";
 import Update_home_banner from "../pages/Bromag/Update_home_banner";
+import Update_partner_banner from "../pages/Bromag/Update_partner_banner";
+import Update_mustVisit_banner from "../pages/Bromag/Update_mustVisit_banner";
+import Update_upcoming_banner from "../pages/Bromag/Update_upcoming_banner";
+import Update_whoWeAre_banner from "../pages/Bromag/Update_whoWeAre_banner";
+import Update_workWithUs_banner from "../pages/Bromag/Update_workWithUs_banner";
 
 const Bromag = () => {
   return (
@@ -157,6 +162,15 @@ const Bromag = () => {
           }
         />
         <Route
+          path="/update-partner-banner/:bannerId"
+          element={
+            <>
+              <BromagAccess />
+              <Update_partner_banner />
+            </>
+          }
+        />
+        <Route
           path="/must-visit-banner"
           element={
             <>
@@ -175,6 +189,15 @@ const Bromag = () => {
           }
         />
         <Route
+          path="/update-must-visit-banner/:bannerId"
+          element={
+            <>
+              <BromagAccess />
+              <Update_mustVisit_banner />
+            </>
+          }
+        />
+        <Route
           path="/upcoming-banner"
           element={
             <>
@@ -189,6 +212,15 @@ const Bromag = () => {
             <>
               <BromagAccess />
               <Add_upcoming_banner />
+            </>
+          }
+        />
+        <Route
+          path="/update-upcoming-banner/:bannerId"
+          element={
+            <>
+              <BromagAccess />
+              <Update_upcoming_banner />
             </>
           }
         />
@@ -291,6 +323,15 @@ const Bromag = () => {
             </>
           }
         />
+         <Route
+          path="/update-workWithUs-banner/:bannerId"
+          element={
+            <>
+              <BromagAccess />
+              <Update_workWithUs_banner />
+            </>
+          }
+        />
         <Route
           path="/who-we-are-banners"
           element={
@@ -306,6 +347,15 @@ const Bromag = () => {
             <>
               <BromagAccess />
               <Add_who_we_are_banner />
+            </>
+          }
+        />
+        <Route
+          path="/update-whoWeAre-banner/:bannerId"
+          element={
+            <>
+              <BromagAccess />
+              <Update_whoWeAre_banner />
             </>
           }
         />

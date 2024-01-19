@@ -6,6 +6,7 @@ import axios from "axios";
 import { useStateAndCity } from "../../../utils/StateAndCityContext";
 import { Image } from "antd";
 import toast from "react-hot-toast";
+import { FaEdit } from "react-icons/fa";
 
 const Work_with_us_banner_table = () => {
   const [WorkWithUsBanners, setWorkWithUsBanners] = useState([]);
@@ -140,7 +141,15 @@ const Work_with_us_banner_table = () => {
                         }}
                       />
                     </td>
-                    <td className="px-6 py-4 flex justify-center space-x-2 items-center">
+                    <td className="px-6 py-4 flex justify-center space-x-2">
+                      <button
+                        onClick={() => {
+                          navigate(`/update-workWithUs-banner/${item._id}`);
+                        }}
+                        class="flex p-2.5 bg-yellow-500 rounded-xl hover:rounded-3xl hover:bg-yellow-600 transition-all duration-300 text-white"
+                      >
+                        <FaEdit class="h-6 w-6" />
+                      </button>
                       <button
                         onClick={() => {
                           handleBannerDrop(item._id);
